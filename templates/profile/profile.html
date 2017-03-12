@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="form row-form short-form">
+    <div class="form-header">Settings: username</div>
+
+        <div class="row">
+            <label for="username">Login</label>
+            <input id="username" type="text" name="username" class="form-control">
+        </div>
+        <div class="row">
+            <label for="email">Email</label>
+            <input id="email" type="text" name="email" class="form-control">
+        </div>
+        <div class="row">
+            <label for="nickname">NickName</label>
+            <input id="nickname" type="text" name="nickname" class="form-control">
+        </div>
+        <div class="row">
+            <label>Avatar</label>
+            <img src="holder.js/80x80">
+        </div>
+        <div class="row">
+            <label></label>
+            <input type="file">
+        </div>
+        <div class="row">
+            <input class="btn btn-success" type="submit" value="Save">
+        </div>
+    </div>
+{% endblock %}

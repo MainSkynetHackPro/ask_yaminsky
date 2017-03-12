@@ -1,6 +1,5 @@
 from django.conf.urls import url
-from .views import AskListView, QuestionView, CreateAskView
-
+from .views import AskListView, QuestionView, CreateAskView, ProfileView, LoginView, RegistrationView
 
 urlpatterns = [
     url(
@@ -19,5 +18,23 @@ urlpatterns = [
         r'^ask/$',
         CreateAskView.as_view(),
         name='list'
+    ),
+
+    url(
+        r'^profile/$',
+        ProfileView.as_view(),
+        name='profile'
+    ),
+
+    url(
+        r'^login/$',
+        LoginView.as_view(),
+        name='profile'
+    ),
+
+    url(
+        r'^registration/$',
+        RegistrationView.as_view(),
+        name='profile'
     )
 ]

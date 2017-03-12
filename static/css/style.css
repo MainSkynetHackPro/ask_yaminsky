@@ -111,9 +111,35 @@
 .best-members .member {
   display: block; }
 
+.form .form-header {
+  font-size: 30px; }
+.form .form-errors {
+  color: #ff0000;
+  font-size: 18px; }
 .form .row {
   margin: 20px 0; }
 .form .row:first-of-type {
   margin-top: 0px; }
+
+.short-form {
+  width: 500px !important; }
+  .short-form textarea {
+    height: 200px; }
+
+.row-form .row {
+  display: flex; }
+  .row-form .row label {
+    display: block;
+    width: 140px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; }
+  .row-form .row input {
+    width: 100%; }
+  .row-form .row img {
+    position: relative;
+    left: -30px; }
+  .row-form .row .btn {
+    width: auto; }
 
 /*# sourceMappingURL=style.css.map */

@@ -27,3 +27,15 @@ class QuestionView(TemplateView):
 
 class CreateAskView(TemplateView):
     template_name = 'ask/create.html'
+
+
+class ProfileView(TemplateView):
+    template_name = 'profile/profile.html'
+
+
+class LoginView(TemplateView):
+    template_name = 'profile/login.html'
+
+
+class RegistrationView(TemplateView):
+    template_name = 'profile/registration.html'

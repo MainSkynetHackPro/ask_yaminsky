@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="form row-form short-form">
+        <div class="form-header">Log in</div>
+        <div class="form-errors">Wrong username or password</div>
+        <div class="row">
+            <label for="username">Login</label>
+            <input id="username" type="text" name="username" class="form-control">
+        </div>
+        <div class="row">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" class="form-control">
+        </div>
+        <div class="row">
+            <input class="btn btn-success" type="submit" value="Login">
+        </div>
+    </div>
+{% endblock %}
