@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="parent-block block">
+        <div class="user-info">
+            <div class="avatar">
+                <img src="holder.js/80x80">
+            </div>
+            <p class="username"></p>
+            <div class="rating">
+                <a href="#">
+                    <span class="down glyphicon glyphicon-thumbs-down"></span>
+                </a>
+                <span class="value">5</span>
+                <a href="#">
+                    <span class="up glyphicon glyphicon-thumbs-up"></span>
+                </a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="question">
+                <a href="#">Some question?</a>
+            </div>
+            <div class="bottom-data">
+                <span class="tags-block">Tags:
+                    <a href="#">Python</a>
+                    <a href="#">aaa</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="b-block block">
+        <div class="user-info">
+            <div class="avatar">
+                <img src="holder.js/80x80">
+            </div>
+            <p class="username"></p>
+            <div class="rating">
+                <a href="#">
+                    <span class="down glyphicon glyphicon-thumbs-down"></span>
+                </a>
+                <span class="value">5</span>
+                <a href="#">
+                    <span class="up glyphicon glyphicon-thumbs-up"></span>
+                </a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="question">
+                <a href="#">Some question?</a>
+            </div>
+            <div class="bottom-data">
+                <input type="checkbox" id="is_correct">
+                <label for="is_correct">Correct!</label>
+            </div>
+        </div>
+    </div>
+{% endblock %}

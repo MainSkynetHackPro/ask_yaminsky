@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for item in object_list %}
+        <div class="b-block block">
+            <div class="user-info">
+                <div class="avatar">
+                    <img src="holder.js/80x80">
+                </div>
+                <p class="username">{{ item.author }}</p>
+                <div class="rating">
+                    <a href="#">
+                        <span class="down glyphicon glyphicon-thumbs-down"></span>
+                    </a>
+                    <span class="value">{{ item.rating }}</span>
+                    <a href="#">
+                        <span class="up glyphicon glyphicon-thumbs-up"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="content">
+                <div class="question">
+                    <a href="#">{{ item.question }}</a>
+                </div>
+                <div class="bottom-data">
+                    <a href="#">Show answers(3)</a>
+                    <span class="tags-block">Tags:
+                        <a href="#">Python</a>
+                        <a href="#">aaa</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

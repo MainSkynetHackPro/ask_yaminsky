@@ -19,7 +19,6 @@ config.read('conf/app.conf')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -30,7 +29,6 @@ SECRET_KEY = 'dt(ty$+v289@zf^+6!-i)-pa*0mej^67-v!+g%vtn-mxsjg)ay'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -56,10 +54,12 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'ask_yaminsky.urls'
 
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates"),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,12 +68,18 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'builtins': [
+                'ask.templatetags.base_blocks',
+            ]
         },
     },
 ]
 
-WSGI_APPLICATION = 'ask_yaminsky.wsgi.application'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
+WSGI_APPLICATION = 'ask_yaminsky.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
@@ -88,7 +94,6 @@ DATABASES = {
         'PASSWORD': config.get('db', 'password'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -108,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -121,7 +125,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/

@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Site</title>
+    <link rel="stylesheet" type="text/css" href="{% static "lib/css/bootstrap.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+
+    <script type="text/javascript" src="{% static "lib/js/jquery-3.1.1.js" %}"></script>
+    <script type="text/javascript" src="{% static "lib/js/holder.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "lib/js/bootstrap.js" %}"></script>
+</head>
+
+<body>
+<section class="header">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="container container-fluid">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">Brand</a>
+                </div>
+                <div class="userinfo">
+                    <div class="nav navbar-nav navbar-right">
+                        <span class="user">
+                            <span class="username">Username</span>
+                            <span class="links">
+                                    <a href="#">Logout</a>
+                                    <a href="#">Settings</a>
+                                </span>
+                        </span>
+                        <img src="holder.js/40x40">
+                    </div>
+                </div>
+                {#                <ul class="nav navbar-nav navbar-right">#}
+                {#                    <li><a href="#" class="ask">Log in</a></li>#}
+                {#                    <li><a href="#" class="ask">Register</a></li>#}
+                {#                </ul>#}
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</section>
+<section class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 blocks-list">
+                {% block content %}
+
+                {% endblock %}
+            </div>
+            <div class="col-md-3">
+                <div class="b-block right-column">
+                    {% popular_tags %}
+                    {% best_members %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

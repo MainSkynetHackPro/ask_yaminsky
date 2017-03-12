@@ -1,0 +1,119 @@
+.container {
+  padding: 0; }
+
+.navbar {
+  border-radius: 0; }
+  .navbar .userinfo img {
+    margin-left: 20px;
+    margin-right: 10px;
+    position: relative;
+    top: 5px; }
+  .navbar .userinfo .user {
+    float: right;
+    margin-top: 5px; }
+    .navbar .userinfo .user span {
+      display: block; }
+      .navbar .userinfo .user span a {
+        margin-right: 8px; }
+  .navbar .container {
+    padding: 0; }
+
+.blocks-list {
+  padding: 0; }
+
+.block {
+  position: relative;
+  display: flex;
+  margin: 10px 0;
+  padding: 7px; }
+  .block .user-info {
+    width: 100px;
+    padding-top: 3px; }
+    .block .user-info .avatar {
+      text-align: center; }
+      .block .user-info .avatar img {
+        width: 80px;
+        height: 80px; }
+    .block .user-info .username {
+      text-align: center;
+      margin: 5px 0; }
+  .block .content {
+    padding-left: 7px;
+    width: 100%; }
+    .block .content .question {
+      font-size: 28px; }
+  .block .rating {
+    font-size: 18px;
+    text-align: center; }
+    .block .rating a {
+      text-decoration: none; }
+    .block .rating .up {
+      color: #57d057; }
+    .block .rating .up:hover {
+      color: #2a972a; }
+    .block .rating .down {
+      color: #de2a25; }
+    .block .rating .down:hover {
+      color: #9f1c18; }
+    .block .rating .value {
+      position: relative;
+      top: -2px;
+      font-size: 16px; }
+    .block .rating span {
+      margin: 0 2px; }
+  .block .bottom-data {
+    position: absolute;
+    bottom: 10px; }
+
+.block:first-of-type {
+  margin-top: 0; }
+
+.b-block {
+  border: 1px solid #e7e7e7;
+  border-radius: 4px; }
+
+.parent-block {
+  border-bottom: 1px solid #e7e7e7; }
+
+.right-column {
+  padding: 7px; }
+
+.right-block {
+  padding: 7px;
+  margin-bottom: 14px; }
+  .right-block .header {
+    margin-bottom: 1px; }
+    .right-block .header h4 {
+      margin: 0; }
+
+.right-block:last-of-type {
+  margin-bottom: 0; }
+
+.popular-tags .tag {
+  margin: 2px; }
+.popular-tags .tag-1 {
+  font-size: 12px; }
+.popular-tags .tag-2 {
+  font-size: 16px; }
+.popular-tags .tag-3 {
+  font-size: 20px; }
+.popular-tags .tag-4 {
+  font-size: 24px; }
+.popular-tags .tag-5 {
+  font-size: 28px; }
+.popular-tags .tag-6 {
+  font-size: 32px; }
+.popular-tags .tag-7 {
+  font-size: 36px; }
+.popular-tags .tag-8 {
+  font-size: 40px; }
+
+.best-members .member {
+  display: block; }
+
+.form .row {
+  margin: 20px 0; }
+.form .row:first-of-type {
+  margin-top: 0px; }
+
+/*# sourceMappingURL=style.css.map */
