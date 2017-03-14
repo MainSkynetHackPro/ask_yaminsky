@@ -20,10 +20,10 @@
             </div>
             <div class="content">
                 <div class="question">
-                    <a href="#">{{ item.question }}</a>
+                    <a href="{% url "ask:show" %}">{{ item.question }}</a>
                 </div>
                 <div class="bottom-data">
-                    <a href="#">Show answers(3)</a>
+                    <a href="{% url "ask:show" %}">Show answers(3)</a>
                     <span class="tags-block">Tags:
                         <a href="#">Python</a>
                         <a href="#">aaa</a>

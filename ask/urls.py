@@ -11,7 +11,7 @@ urlpatterns = [
     url(
         r'^answer/$',
         QuestionView.as_view(),
-        name='list'
+        name='show'
     ),
 
     url(
@@ -29,12 +29,12 @@ urlpatterns = [
     url(
         r'^login/$',
         LoginView.as_view(),
-        name='profile'
+        name='login'
     ),
 
     url(
         r'^registration/$',
         RegistrationView.as_view(),
-        name='profile'
+        name='registration'
     )
 ]
