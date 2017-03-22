@@ -4,8 +4,8 @@
 2. в conf/ создать конфиг app.conf
 ```
   [db]
-  host= IP mysql сервера
-  port= порт mysql сервера 
+  host= IP mysql
+  port= порт mysql
   name= имя базы 
   user= пользователь 
   password= пароль  
