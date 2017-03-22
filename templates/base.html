@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Site</title>
+    <title>Ask_Yaminsky</title>
     <link rel="stylesheet" type="text/css" href="{% static "lib/css/bootstrap.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
 
@@ -18,8 +18,11 @@
         <div class="container">
             <div class="container container-fluid">
                 <div class="navbar-header">
-                    <a href="/" class="navbar-brand">Brand</a>
+                    <a href="/" class="navbar-brand">Ask_Yaminsky</a>
                 </div>
+                    <ul class="nav navbar-nav">
+                        <li><a class="ask-button" href="{% url "ask:ask" %}">ASK!</a></li>
+                    </ul>
                 <div class="userinfo">
                     <div class="nav navbar-nav navbar-right">
                         <span class="user">

@@ -14,6 +14,7 @@ class AskListView(TemplateView):
             item = dict()
             item['username'] = u'username'
             item['question'] = u'Some question?'
+            item['text'] = u'just some text'
             item['rating'] = 5
             data.append(item)
 

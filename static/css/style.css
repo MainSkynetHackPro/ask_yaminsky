@@ -3,6 +3,19 @@
 
 .navbar {
   border-radius: 0; }
+  .navbar .ask-button {
+    position: relative;
+    top: 8px;
+    display: inline-block;
+    border: solid 1px #57d057;
+    background: #35bf35;
+    color: #fff !important;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px; }
+  .navbar .ask-button:hover {
+    background: #7fdb7f !important;
+    color: #fff !important; }
   .navbar .userinfo img {
     margin-left: 20px;
     margin-right: 10px;

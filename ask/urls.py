@@ -17,7 +17,7 @@ urlpatterns = [
     url(
         r'^ask/$',
         CreateAskView.as_view(),
-        name='list'
+        name='ask'
     ),
 
     url(

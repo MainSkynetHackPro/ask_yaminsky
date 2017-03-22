@@ -11,6 +11,21 @@ $c_red: #de2a25;
 }
 
 .navbar {
+  .ask-button{
+    position: relative;
+    top: 8px;
+    display: inline-block;
+    border: solid 1px $c_green;
+    background: darken($c_green, 10%);
+    color: #fff !important;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  .ask-button:hover{
+    background: lighten($c_green, 10%) !important;
+    color: #fff !important;
+  }
   .userinfo {
     img {
       margin-left: 20px;
