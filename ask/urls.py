@@ -9,7 +9,7 @@ urlpatterns = [
     ),
 
     url(
-        r'^answer/$',
+        r'^answer/(?P<pk>\w+)$',
         QuestionView.as_view(),
         name='show'
     ),
