@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
         f_name = [
             'Red', 'Mad', 'Dummy', 'Crazy', 'Big', 'Black', 'Lonely', 'Shiz', 'Drunken',
-            'Wicked', 'Brainless', 'Rich', 'Stubborn', 'Stupid', 'Fat', 'Wooden', 'Donald'
+            'Wicked', 'Brainless', 'Rich', 'Stubborn', 'Stupid', 'Fat', 'Wooden', 'Donald',
             'American', 'Dead', 'Lucky', 'Night'
         ]
         l_name = [

@@ -2,4 +2,3 @@ django==1.9.8
 mysql-python==1.2.5
 gunicorn==19.6.0
 pillow==2.1.0
-

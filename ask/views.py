@@ -17,6 +17,10 @@ class TopAskListView(ListView):
     ordering = '-rating'
     paginate_by = 10
 
+    def get_queryset(self):
+        queryset = Ask.objects.top_questions()
+        return queryset
+
 
 class ByTagView(ListView):
     template_name = 'ask/by_tag_list.html'
@@ -25,14 +29,14 @@ class ByTagView(ListView):
 
     def get_queryset(self):
         pk = self.kwargs.get('pk')
-        queryset = self.model.objects.filter(tags__pk=pk)
+        queryset = Ask.objects.get_all_by_tag_pk(pk)
         if not queryset:
             raise Http404
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super(ByTagView, self).get_context_data(**kwargs)
-        context['current_tag'] = Tag.objects.filter(pk=self.kwargs.get('pk')).first()
+        context['current_tag'] = Tag.objects.get_tag_by_pk(self.kwargs.get('pk'))
         return context
 
 

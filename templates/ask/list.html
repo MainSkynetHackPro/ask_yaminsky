@@ -11,11 +11,11 @@
         <div class="b-block block">
             <div class="user-info">
                 <div class="avatar">
-                     {% if item.author.avatar %}
-                         <img class="user-avatar-middle" src="{{ item.author.avatar.url }}">
-                     {% else %}
-                         <img class="user-avatar-middle" src="holder.js/80x80">
-                     {% endif %}
+                    {% if item.author.avatar %}
+                        <img class="user-avatar-middle" src="{{ item.author.avatar.url }}">
+                    {% else %}
+                        <img class="user-avatar-middle" src="holder.js/80x80">
+                    {% endif %}
                 </div>
                 <p class="username">{{ item.author.username }}</p>
                 <div class="rating">
@@ -39,7 +39,7 @@
                     <a href="{% url "ask:show" item.pk %}">Show answers({{ item.answers.count }})</a>
                     <span class="tags-block">Tags:
                         {% for tag in item.tags.all %}
-                            <a href="{% url "ask:tag_view" tag.pk %}">#{{ tag.title }}</a>
+                            <a href="{% url "ask:tag_view" tag.pk %}">{{ tag.tag }}</a>
                         {% endfor %}
                     </span>
                 </div>
@@ -48,9 +48,11 @@
 
     {% endfor %}
 
-    {% url "ask:list" as ask_base_url %}
-    {% if is_paginated %}
-    {% include "blocks/pagination.html" with page_base_url=ask_base_url objects=object_list %}
-    {% endif %}
+    {% block paginator %}
+        {% url "ask:list" as ask_base_url %}
+        {% if is_paginated %}
+            {% include "blocks/pagination.html" with page_base_url=ask_base_url objects=object_list %}
+        {% endif %}
+    {% endblock %}
 
 {% endblock %}

@@ -31,7 +31,7 @@
             <div class="bottom-data">
                 <span class="tags-block">Tags:
                     {% for tag in object.tags.all %}
-                        <a href="{% url "ask:tag_view" tag.pk %}">#{{ tag.title }}</a>
+                        <a href="{% url "ask:tag_view" tag.pk %}">{{ tag.tag }}</a>
                     {% endfor %}
                 </span>
             </div>

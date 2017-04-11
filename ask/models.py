@@ -1,12 +1,13 @@
 # encoding=utf8
 from __future__ import unicode_literals
-from django.db import models
-from django.utils import timezone
-
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, UserManager
-import os
+from django.db import models
+from django.utils import timezone
 import hashlib
+import os
+
+from ask.managers import TagManager, AskManager
 
 
 def avatar_dir_path(instance, filename):
@@ -49,11 +50,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Tag(models.Model):
     title = models.CharField(verbose_name=u'Tag title', max_length=255, unique=True)
 
+    objects = TagManager()
+
     class Meta:
         verbose_name = u'Tag'
         verbose_name_plural = u'Tags'
 
     def __unicode__(self):
+        return u'#{0}'.format(self.title)
+
+    def tag(self):
         return u'#{0}'.format(self.title)
 
 
@@ -64,7 +70,11 @@ class Ask(models.Model):
 
     author = models.ForeignKey(User, verbose_name=u'Author')
 
-    tags = models.ManyToManyField(Tag, verbose_name=u'Tags', blank=True)
+    tags = models.ManyToManyField(Tag, verbose_name=u'Tags', related_name=u'asks', blank=True)
+
+    date_create = models.DateTimeField(verbose_name=u'Create date', default=timezone.now)
+
+    objects = AskManager()
 
     class Meta:
         verbose_name = u'Ask'
@@ -81,6 +91,8 @@ class Answer(models.Model):
     ask = models.ForeignKey(Ask, verbose_name=u'Ask', related_name='answers')
     author = models.ForeignKey(User, verbose_name=u'Author')
 
+    date_create = models.DateTimeField(verbose_name=u'Create date', default=timezone.now)
+
     class Meta:
         verbose_name = u'Answer'
         verbose_name_plural = u'Answers'
@@ -95,6 +107,8 @@ class UserVote(models.Model):
     answer = models.ForeignKey(Answer, verbose_name=u'Answer', related_name='votes', null=True, blank=True)
 
     delta = models.IntegerField(verbose_name=u'delta')
+
+    date_create = models.DateTimeField(verbose_name=u'Create date', default=timezone.now)
 
     class Meta:
         verbose_name = u'User vote'

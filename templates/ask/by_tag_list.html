@@ -1,6 +1,6 @@
 {% extends "ask/list.html" %}
 
 {% block page-sub-header %}
-    <h3>{{ current_tag }}</h3>
+    <h3>{{ current_tag.tag }}</h3>
     <a href="{% url "ask:list" %}">New questions</a>
 {% endblock %}
