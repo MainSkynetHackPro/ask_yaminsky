@@ -24,6 +24,7 @@
                     <ul class="nav navbar-nav">
                         <li><a class="ask-button" href="{% url "ask:ask" %}">ASK!</a></li>
                     </ul>
+                {% if request.user.is_authenticated %}
                 <div class="userinfo">
                     <div class="nav navbar-nav navbar-right">
                         <span class="user">
@@ -33,13 +34,19 @@
                                     <a href="{% url "ask:profile" %}">Settings</a>
                                 </span>
                         </span>
-                        <img src="holder.js/40x40">
+                        {% if request.user.avatar %}
+                            <img class="user-avatar-small" src="{{ request.user.avatar.url }}">
+                        {% else %}
+                            <img src="holder.js/40x40">
+                        {% endif %}
                     </div>
                 </div>
-                {#                <ul class="nav navbar-nav navbar-right">#}
-                {#                    <li><a href="#" class="ask">Log in</a></li>#}
-                {#                    <li><a href="#" class="ask">Register</a></li>#}
-                {#                </ul>#}
+                {% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url "ask:login" %}" class="ask">Log in</a></li>
+                        <li><a href="{% url "ask:registration" %}" class="ask">Registration</a></li>
+                    </ul>
+                {% endif %}
                 <form class="navbar-form navbar-right">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">

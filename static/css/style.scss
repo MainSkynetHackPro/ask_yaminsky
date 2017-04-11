@@ -57,6 +57,16 @@ $c_red: #de2a25;
     padding: 0;
 }
 
+.user-avatar-small{
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.user-avatar-middle{
+    max-width: 80px;
+    max-height: 80px;
+}
+
 .block {
     .user-info {
         .avatar {

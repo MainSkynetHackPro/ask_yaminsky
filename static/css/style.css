@@ -34,6 +34,14 @@
 .blocks-list {
   padding: 0; }
 
+.user-avatar-small {
+  max-width: 40px;
+  max-height: 40px; }
+
+.user-avatar-middle {
+  max-width: 80px;
+  max-height: 80px; }
+
 .block {
   position: relative;
   display: flex;

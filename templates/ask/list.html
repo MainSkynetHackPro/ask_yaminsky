@@ -11,7 +11,11 @@
         <div class="b-block block">
             <div class="user-info">
                 <div class="avatar">
-                    <img src="holder.js/80x80">
+                     {% if item.author.avatar %}
+                         <img class="user-avatar-middle" src="{{ item.author.avatar.url }}">
+                     {% else %}
+                         <img class="user-avatar-middle" src="holder.js/80x80">
+                     {% endif %}
                 </div>
                 <p class="username">{{ item.author.username }}</p>
                 <div class="rating">

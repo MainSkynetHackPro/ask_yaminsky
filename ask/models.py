@@ -1,9 +1,20 @@
 # encoding=utf8
 from __future__ import unicode_literals
 from django.db import models
+from django.utils import timezone
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, UserManager
+import os
+import hashlib
+
+
+def avatar_dir_path(instance, filename):
+    name, extension = os.path.splitext(filename)
+    hsh = hashlib.md5()
+    hsh.update(str(timezone.now()))
+    filename = u'{0}{1}'.format(hsh.hexdigest(), extension)
+    return 'avatar/{0}/{1}/{2}/{3}'.format(filename[:2], filename[2:4], filename[4:6], filename[6:])
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -12,6 +23,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name=u'Email', unique=True, default=None, null=True, blank=True)
 
     is_staff = models.BooleanField(verbose_name=u'has admin access', default=False)
+
+    avatar = models.ImageField(verbose_name=u'Avatar', upload_to=avatar_dir_path, default=None, blank=True, null=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
