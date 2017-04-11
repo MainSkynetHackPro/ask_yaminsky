@@ -25,12 +25,13 @@ class ByTagView(ListView):
 
     def get_queryset(self):
         pk = self.kwargs.get('pk')
-        return self.model.objects.filter(tags__pk=pk)
+        queryset = self.model.objects.filter(tags__pk=pk)
+        if not queryset:
+            raise Http404
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(ByTagView, self).get_context_data(**kwargs)
-        if not context['object_list']:
-            raise Http404
         context['current_tag'] = Tag.objects.filter(pk=self.kwargs.get('pk')).first()
         return context
 
