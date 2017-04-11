@@ -7,212 +7,228 @@ $c_red: #de2a25;
 //end base elements
 // header
 .container {
-  padding: 0;
+    padding: 0;
 }
 
 .navbar {
-  .ask-button{
-    position: relative;
-    top: 8px;
-    display: inline-block;
-    border: solid 1px $c_green;
-    background: darken($c_green, 10%);
-    color: #fff !important;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-  .ask-button:hover{
-    background: lighten($c_green, 10%) !important;
-    color: #fff !important;
-  }
-  .userinfo {
-    img {
-      margin-left: 20px;
-      margin-right: 10px;
-      position: relative;
-      top: 5px;
+    .ask-button {
+        position: relative;
+        top: 8px;
+        display: inline-block;
+        border: solid 1px $c_green;
+        background: darken($c_green, 10%);
+        color: #fff !important;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
     }
-    .user {
-      float: right;
-      margin-top: 5px;
-      span {
-        a {
-          margin-right: 8px;
+    .ask-button:hover {
+        background: lighten($c_green, 10%) !important;
+        color: #fff !important;
+    }
+    .userinfo {
+        img {
+            margin-left: 20px;
+            margin-right: 10px;
+            position: relative;
+            top: 5px;
         }
-        display: block;
-      }
+        .user {
+            float: right;
+            margin-top: 5px;
+            span {
+                a {
+                    margin-right: 8px;
+                }
+                display: block;
+            }
+        }
     }
-  }
-  .container {
-    padding: 0;
-  }
-  border-radius: 0;
+    .container {
+        padding: 0;
+    }
+    border-radius: 0;
 }
 
 // endheader
 // base block
 .blocks-list {
 
-  padding: 0;
+    padding: 0;
 }
 
 .block {
-  .user-info {
-    .avatar {
-      img {
-        width: 80px;
-        height: 80px;
-      }
-      text-align: center;
+    .user-info {
+        .avatar {
+            img {
+                width: 80px;
+                height: 80px;
+            }
+            text-align: center;
+        }
+        .username {
+            text-align: center;
+            margin: 5px 0;
+        }
+        width: 100px;
+        padding-top: 3px;
     }
-    .username {
-      text-align: center;
-      margin: 5px 0;
+    .content {
+        .question {
+            font-size: 28px;
+        }
+        padding-left: $base_block_padding;
+        width: 100%;
     }
-    width: 100px;
-    padding-top: 3px;
-  }
-  .content {
-    .question {
-      font-size: 28px;
+    .rating {
+        a {
+            text-decoration: none;
+        }
+        .up {
+            color: $c_green;
+        }
+        .up:hover {
+            color: darken($c_green, 20%);
+        }
+        .down {
+            color: $c_red;
+        }
+        .down:hover {
+            color: darken($c_red, 15%);
+        }
+        .value {
+            position: relative;
+            top: -2px;
+            font-size: 16px;
+        }
+        span {
+            margin: 0 2px
+        }
+        font-size: 18px;
+        text-align: center;
     }
-    padding-left: $base_block_padding;
-    width: 100%;
-  }
-  .rating {
-    a {
-      text-decoration: none;
+    .bottom-data {
+        position: absolute;
+        bottom: 10px;
     }
-    .up {
-      color: $c_green;
-    }
-    .up:hover {
-      color: darken($c_green, 20%);
-    }
-    .down {
-      color: $c_red;
-    }
-    .down:hover {
-      color: darken($c_red, 15%);
-    }
-    .value {
-      position: relative;
-      top: -2px;
-      font-size: 16px;
-    }
-    span {
-      margin: 0 2px
-    }
-    font-size: 18px;
-    text-align: center;
-  }
-  .bottom-data {
-    position: absolute;
-    bottom: 10px;
-  }
-  position: relative;
-  display: flex;
-  margin: 10px 0;
-  padding: $base_block_padding;
+    position: relative;
+    display: flex;
+    margin: 10px 0;
+    padding: $base_block_padding;
 }
 
 .block:first-of-type {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .b-block {
-  border: 1px solid $border_color;
-  border-radius: $border_radius;
+    border: 1px solid $border_color;
+    border-radius: $border_radius;
 }
 
 .parent-block {
-  border-bottom: 1px solid $border_color;
+    border-bottom: 1px solid $border_color;
 }
 
 .right-column {
-  padding: $base_block_padding;
+    padding: $base_block_padding;
 }
 
 .right-block {
-  .header {
-    h4 {
-      margin: 0;
+    .header {
+        h4 {
+            margin: 0;
+        }
+        margin-bottom: 1px;
     }
-    margin-bottom: 1px;
-  }
-  padding: $base_block_padding;
-  margin-bottom: $base_block_padding * 2;
+    padding: $base_block_padding;
+    margin-bottom: $base_block_padding * 2;
 }
 
 .right-block:last-of-type {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .popular-tags {
-  $tag_size: 8px;
-  $tag_step: 4px;
-  .tag {
-    margin: 2px;
-  }
-  @for $i from 1 through 8 {
-    .tag-#{$i} {
-      font-size: $tag_size + $tag_step * $i;
+    $tag_size: 8px;
+    $tag_step: 4px;
+    .tag {
+        margin: 2px;
     }
-  }
+    @for $i from 1 through 8 {
+        .tag-#{$i} {
+            font-size: $tag_size + $tag_step * $i;
+        }
+    }
 }
 
 .best-members {
-  .member {
-    display: block;
-  }
+    .member {
+        display: block;
+    }
 }
 
 .form {
-  .form-header{
-    font-size: 30px;
-  }
-  .form-errors{
-    color: #ff0000;
-    font-size: 18px;
-  }
-  .row {
-    margin: 20px 0;
-  }
-  .row:first-of-type {
-    margin-top: 0px;
-  }
-  .form-control {
+    .form-header {
+        font-size: 30px;
+    }
+    .form-errors {
+        color: #ff0000;
+        font-size: 18px;
+    }
+    .row {
+        margin: 20px 0;
+    }
+    .row:first-of-type {
+        margin-top: 0px;
+    }
+    .form-control {
 
-  }
+    }
 }
 
 .short-form {
-  textarea {
-    height: 200px;
-  }
-  width: 500px !important;
+    textarea {
+        height: 200px;
+    }
+    width: 500px !important;
 }
 
 .row-form {
-  .row {
-    label {
-      display: block;
-      width: 140px;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    .error-row {
+        display: block;
+        margin-left: 120px;
+        color: #ff0000;
+        margin-top: -20px;
     }
-    input{
-      width: 100%;
+    .row {
+        label {
+            display: block;
+            width: 140px;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        input {
+            width: 100%;
+        }
+        img {
+            position: relative;
+            left: -30px;
+        }
+        .btn {
+            width: auto;
+        }
+        display: flex;
     }
-    img{
-      position: relative;
-      left: -30px;
+}
+
+.custom-header {
+    margin-top: 0px;
+    h3 {
+        display: inline-block;
     }
-    .btn{
-      width: auto;
+    a {
+        margin-left: 20px;
     }
-    display: flex;
-  }
 }

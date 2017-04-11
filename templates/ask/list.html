@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="page-header custom-header">
+        {% block page-sub-header %}
+            <h3>New questions</h3>
+            <a href="{% url "ask:top_list" %}">Top questions</a>
+        {% endblock %}
+    </div>
     {% for item in object_list %}
         <div class="b-block block">
             <div class="user-info">
                 <div class="avatar">
                     <img src="holder.js/80x80">
                 </div>
-                <p class="username">{{ item.author }}</p>
+                <p class="username">{{ item.author.username }}</p>
                 <div class="rating">
                     <a href="#">
                         <span class="down glyphicon glyphicon-thumbs-down"></span>
@@ -20,16 +26,17 @@
             </div>
             <div class="content">
                 <div class="question">
-                    <a href="{% url "ask:show" 1 %}">{{ item.question }}</a>
+                    <a href="{% url "ask:show" item.pk %}">{{ item.question }}</a>
                 </div>
                 <div class="test">
                     {{ item.text }}
                 </div>
                 <div class="bottom-data">
-                    <a href="{% url "ask:show" 1 %}">Show answers(3)</a>
+                    <a href="{% url "ask:show" item.pk %}">Show answers({{ item.answers.count }})</a>
                     <span class="tags-block">Tags:
-                        <a href="#">Python</a>
-                        <a href="#">aaa</a>
+                        {% for tag in item.tags.all %}
+                            <a href="{% url "ask:tag_view" tag.pk %}">#{{ tag.title }}</a>
+                        {% endfor %}
                     </span>
                 </div>
             </div>
@@ -37,6 +44,9 @@
 
     {% endfor %}
 
-    {% include "blocks/pagination.html" %}
+    {% url "ask:list" as ask_base_url %}
+    {% if is_paginated %}
+    {% include "blocks/pagination.html" with page_base_url=ask_base_url objects=object_list %}
+    {% endif %}
 
 {% endblock %}

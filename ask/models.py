@@ -34,7 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Tag(models.Model):
-    title = models.CharField(verbose_name=u'Tag title', max_length=255)
+    title = models.CharField(verbose_name=u'Tag title', max_length=255, unique=True)
 
     class Meta:
         verbose_name = u'Tag'
@@ -62,7 +62,6 @@ class Ask(models.Model):
 
 
 class Answer(models.Model):
-    title = models.CharField(verbose_name=u'Title', max_length=255)
     text = models.TextField(verbose_name=u'Text')
     rating = models.IntegerField(verbose_name=u'Rating', default=0)
 
@@ -74,7 +73,7 @@ class Answer(models.Model):
         verbose_name_plural = u'Answers'
 
     def __unicode__(self):
-        return self.title
+        return self.text
 
 
 class UserVote(models.Model):

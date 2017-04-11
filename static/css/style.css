@@ -139,6 +139,11 @@
   .short-form textarea {
     height: 200px; }
 
+.row-form .error-row {
+  display: block;
+  margin-left: 120px;
+  color: #ff0000;
+  margin-top: -20px; }
 .row-form .row {
   display: flex; }
   .row-form .row label {
@@ -154,5 +159,12 @@
     left: -30px; }
   .row-form .row .btn {
     width: auto; }
+
+.custom-header {
+  margin-top: 0px; }
+  .custom-header h3 {
+    display: inline-block; }
+  .custom-header a {
+    margin-left: 20px; }
 
 /*# sourceMappingURL=style.css.map */
