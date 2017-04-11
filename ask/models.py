@@ -40,6 +40,9 @@ class Tag(models.Model):
         verbose_name = u'Tag'
         verbose_name_plural = u'Tags'
 
+    def __unicode__(self):
+        return u'#{0}'.format(self.title)
+
 
 class Ask(models.Model):
     question = models.CharField(verbose_name=u'question', max_length=255)
@@ -48,11 +51,14 @@ class Ask(models.Model):
 
     author = models.ForeignKey(User, verbose_name=u'Author')
 
-    tags = models.ManyToManyField(Tag, verbose_name=u'Tags', related_name='asks')
+    tags = models.ManyToManyField(Tag, verbose_name=u'Tags', blank=True)
 
     class Meta:
         verbose_name = u'Ask'
         verbose_name_plural = u'Asks'
+
+    def __unicode__(self):
+        return self.question
 
 
 class Answer(models.Model):
@@ -67,6 +73,9 @@ class Answer(models.Model):
         verbose_name = u'Answer'
         verbose_name_plural = u'Answers'
 
+    def __unicode__(self):
+        return self.title
+
 
 class UserVote(models.Model):
     author = models.ForeignKey(User, verbose_name=u'Author')
@@ -78,3 +87,6 @@ class UserVote(models.Model):
     class Meta:
         verbose_name = u'User vote'
         verbose_name_plural = u'User votes'
+
+    def __unicode__(self):
+        return u'{0} [{1}]'.format(self.author.username, self.delta)
