@@ -49,8 +49,8 @@
     {% endfor %}
 
     {% block paginator %}
-        {% url "ask:list" as ask_base_url %}
         {% if is_paginated %}
+            {% url "ask:list" as ask_base_url %}
             {% include "blocks/pagination.html" with page_base_url=ask_base_url objects=object_list %}
         {% endif %}
     {% endblock %}

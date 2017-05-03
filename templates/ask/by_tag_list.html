@@ -1,6 +1,13 @@
-{% extends "ask/list.html" %}
+{% extends "ask/ask_list.html" %}
 
 {% block page-sub-header %}
     <h3>{{ current_tag.tag }}</h3>
     <a href="{% url "ask:list" %}">New questions</a>
+{% endblock %}
+
+{% block paginator %}
+    {% if is_paginated %}
+        {% url "ask:tag_view" as ask_base_url %}
+        {% include "blocks/pagination.html" with page_base_url=ask_base_url objects=object_list %}
+    {% endif %}
 {% endblock %}

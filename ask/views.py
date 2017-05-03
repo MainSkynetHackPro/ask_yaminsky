@@ -1,11 +1,14 @@
 # coding=utf8
-from django.views.generic import TemplateView, ListView, DetailView
-from django.http import Http404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView, ListView, DetailView, FormView
+from django.http import Http404, HttpResponseRedirect
+from ask.forms import RegistrationForm
 from ask.models import Ask, Tag
 
 
 class AskListView(ListView):
-    template_name = 'ask/list.html'
+    # template_name = 'ask/list.html'
     model = Ask
     ordering = '-pk'
     paginate_by = 10
@@ -45,7 +48,7 @@ class QuestionView(DetailView):
     model = Ask
 
 
-class CreateAskView(TemplateView):
+class CreateAskView(LoginRequiredMixin, TemplateView):
     template_name = 'ask/create.html'
 
 
@@ -56,6 +59,37 @@ class ProfileView(TemplateView):
 class LoginView(TemplateView):
     template_name = 'profile/login.html'
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/')
+        return super(LoginView, self).get(request, *args, **kwargs)
 
-class RegistrationView(TemplateView):
+    def post(self, request, *args, **kwargs):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        redirect_to = request.GET.get('next')
+        user = authenticate(username=username, password=password)
+        if user is None:
+            context = self.get_context_data()
+            context['form_error'] = u'Wrong username or password'
+            return self.render_to_response(context)
+        else:
+            login(request, user)
+        if not redirect_to:
+            redirect_to = '/'
+        return HttpResponseRedirect(redirect_to)
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+
+class RegistrationView(FormView):
+    form_class = RegistrationForm
     template_name = 'profile/registration.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/')
+        return super(RegistrationView, self).get(request, *args, **kwargs)

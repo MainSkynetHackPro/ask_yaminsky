@@ -1,4 +1,4 @@
-{% extends "ask/list.html" %}
+{% extends "ask/ask_list.html" %}
 
 {% block page-sub-header %}
     <h3>Top questions</h3>
@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block paginator %}
-    {% url "ask:top_list" as ask_base_url %}
     {% if is_paginated %}
+        {% url "ask:top_list" as ask_base_url %}
         {% include "blocks/pagination.html" with page_base_url=ask_base_url objects=object_list %}
     {% endif %}
 {% endblock %}
