@@ -1,0 +1,11 @@
+<div class="row">
+    <label for="field__{{ field.html_name }}">{{ field.label }}</label>
+
+        <textarea id="field__{{ field.html_name }}" name="{{ field.html_name }}" class="form-control">{% spaceless %}
+            {% if field.value %}{{ field.value }}{% endif %}
+        {% endspaceless %}</textarea>
+
+</div>
+{% if field.errors %}
+    <div class="error-row">{% for error in field.errors %}{{ error }}<br>{% endfor %}</div>
+{% endif %}

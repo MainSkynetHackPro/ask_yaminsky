@@ -137,4 +137,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 ### RATING ###
-TOP_RATING = 5
+
+TOP_RATING = config.getint('general', 'top_rating')

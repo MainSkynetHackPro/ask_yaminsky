@@ -1,20 +1,31 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block precss %}
+<link rel="stylesheet" href="{% static "lib/css/tagit/jquery.tagit.css" %}">
+        <link rel="stylesheet" href="{% static "lib/css/tagit/tagit.ui-zendesk.css" %}">
+{% endblock %}
+
+{% block css %}
+
+    {#    <link rel="stylesheet" href="{% static "lib/css/tagit/tagit.ui-zendesk.css" %}">#}
+{% endblock %}
+
+{% block js %}
+    <script src="{% static "lib/js/jquery-ui.min.js" %}"></script>
+    <script src="{% static "lib/js/tagit/tag-it.min.js" %}"></script>
+    <script src="{% static "js/ask_create.js" %}"></script>
+{% endblock %}
 
 {% block content %}
-    <form action="#" {#  method="POST" #}>
-        <div class="form short-form">
-            <div class="row">
-                <label for="question">Question</label>
-                <input class="form-control" id="question" type="text">
-            </div>
-            <div class="row">
-                <label for="text">Text</label>
-                <textarea class="form-control" id="text"></textarea>
-            </div>
-            <div class="row">
-                <label for="tags">Tags</label>
-                <input class="form-control" id="tags" type="text">
-            </div>
+    <form action="#" method="POST">
+        {% csrf_token %}
+        <div class="form row-form short-form">
+            {% include "formfields/text_field.html" with field=form.question %}
+
+            {% include "formfields/textarea_field.html" with field=form.text %}
+
+            {% include "formfields/text_field.html" with field=form.tags_list %}
             <div class="row">
                 <input class="btn btn-success" type="submit" value="ASK!">
             </div>

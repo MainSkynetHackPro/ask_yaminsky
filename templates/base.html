@@ -5,12 +5,15 @@
 
 <head>
     <title>Ask_Yaminsky</title>
+    {% block precss %}{% endblock %}
     <link rel="stylesheet" type="text/css" href="{% static "lib/css/bootstrap.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+    {% block css %}{% endblock %}
 
     <script type="text/javascript" src="{% static "lib/js/jquery-3.1.1.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/js/holder.min.js" %}"></script>
     <script type="text/javascript" src="{% static "lib/js/bootstrap.js" %}"></script>
+    {% block js %}{% endblock %}
 </head>
 
 <body>
@@ -28,7 +31,7 @@
                 <div class="userinfo">
                     <div class="nav navbar-nav navbar-right">
                         <span class="user">
-                            <span class="username">Username</span>
+                            <span class="username">{{ request.user.username }}</span>
                             <span class="links">
                                     <a href="{% url "ask:logout" %}">Logout</a>
                                     <a href="{% url "ask:profile" %}">Settings</a>

@@ -175,4 +175,11 @@
   .custom-header a {
     margin-left: 20px; }
 
+ul.tagit {
+  margin-left: 0; }
+  ul.tagit input {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none; }
+
 /*# sourceMappingURL=style.css.map */

@@ -1,6 +1,6 @@
 <div class="row">
     <label for="field__{{ field.html_name }}">{{ field.label }}</label>
-    <input id="field__{{ field.html_name }}" type="text" name="{{ field.html_name }}" class="form-control">
+    <input id="field__{{ field.html_name }}" type="text" name="{{ field.html_name }}" class="form-control" {% if field.value %}value="{{ field.value }}"{% endif %}>
 </div>
 {% if field.errors %}
     <div class="error-row">{% for error in field.errors %}{{ error }}<br>{% endfor %}</div>

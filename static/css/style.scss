@@ -242,3 +242,12 @@ $c_red: #de2a25;
         margin-left: 20px;
     }
 }
+
+ul.tagit {
+  margin-left: 0;
+  input {
+      -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+     box-shadow: none;
+  }
+}

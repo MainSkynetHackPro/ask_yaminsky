@@ -1,9 +1,10 @@
 # coding=utf8
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, ListView, DetailView, FormView
 from django.http import Http404, HttpResponseRedirect
-from ask.forms import RegistrationForm
+from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView
+
+from ask.forms import RegistrationForm, ProfileForm, AskForm
 from ask.models import Ask, Tag
 
 
@@ -48,12 +49,29 @@ class QuestionView(DetailView):
     model = Ask
 
 
-class CreateAskView(LoginRequiredMixin, TemplateView):
+class CreateAskView(LoginRequiredMixin, FormView):
     template_name = 'ask/create.html'
+    form_class = AskForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.author = self.request.user
+        instance.save()
+        return super(CreateAskView, self).form_valid(form)
 
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
     template_name = 'profile/profile.html'
+    form_class = ProfileForm
+    success_url = '/profile/'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        form.save()
+        return super(ProfileView, self).form_valid(form)
 
 
 class LoginView(TemplateView):
@@ -82,12 +100,20 @@ class LoginView(TemplateView):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    return_to = request.META.get('HTTP_REFERER')
+    if not return_to:
+        return_to = '/'
+    return HttpResponseRedirect(return_to)
 
 
 class RegistrationView(FormView):
     form_class = RegistrationForm
     template_name = 'profile/registration.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        form.save()
+        return super(RegistrationView, self).form_valid(form)
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
