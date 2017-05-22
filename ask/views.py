@@ -6,6 +6,7 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView, U
 
 from ask.forms import RegistrationForm, ProfileForm, AskForm
 from ask.models import Ask, Tag
+from django.core.urlresolvers import reverse
 
 
 class AskListView(ListView):
@@ -54,11 +55,14 @@ class CreateAskView(LoginRequiredMixin, FormView):
     form_class = AskForm
     success_url = '/'
 
+    def get_form_kwargs(self):
+        kwargs = super(CreateAskView, self).get_form_kwargs()
+        kwargs.update({'request': self.request})
+        return kwargs
+
     def form_valid(self, form):
-        instance = form.save(commit=False)
-        instance.author = self.request.user
-        instance.save()
-        return super(CreateAskView, self).form_valid(form)
+        instance = form.save(commit=True)
+        return HttpResponseRedirect(reverse("ask:show", kwargs={'pk':instance.pk}))
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
