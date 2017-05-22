@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load base_tags %}
 
 {% block js %}
     <script src="{% static "js/vote.js" %}"></script>
@@ -25,15 +26,29 @@
                     {% endif %}
                 </div>
                 <p class="username">{{ item.author.username }}</p>
-                <div class="rating">
-                    <a href="#" class="vote-down" data-ask="{{ item.pk }}">
-                        <span class="down glyphicon glyphicon-thumbs-down"></span>
-                    </a>
-                    <span class="value">{{ item.rating }}</span>
-                    <a href="#" class="vote-up" data-ask="{{ item.pk }}">
-                        <span class="up glyphicon glyphicon-thumbs-up"></span>
-                    </a>
-                </div>
+                {% if request.user.is_authenticated %}
+                    {% with uservote=item|get_user_vote:request.user %}
+                        <div class="rating">
+                            {% if uservote == 0 %}
+                                <a href="#" class="vote-down" data-ask="{{ item.pk }}">
+                                    <span class="down glyphicon glyphicon-thumbs-down"></span>
+                                </a>
+                            {% endif %}
+
+                            <span class="{% if uservote == 1 %}voted-up {% elif uservote == -1 %}voted-down {% endif %}value">{{ item.rating }}</span>
+
+                            {% if uservote == 0 %}
+                                <a href="#" class="vote-up" data-ask="{{ item.pk }}">
+                                    <span class="up glyphicon glyphicon-thumbs-up"></span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endwith %}
+                {% else %}
+                    <div class="rating">
+                        <span class="value">{{ item.rating }}</span>
+                    </div>
+                {% endif %}
             </div>
             <div class="content">
                 <div class="question">

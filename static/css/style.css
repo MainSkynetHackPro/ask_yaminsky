@@ -80,6 +80,10 @@
       position: relative;
       top: -2px;
       font-size: 16px; }
+    .block .rating .voted-up {
+      color: #2a972a; }
+    .block .rating .voted-down {
+      color: #9f1c18; }
     .block .rating span {
       margin: 0 2px; }
   .block .bottom-data {

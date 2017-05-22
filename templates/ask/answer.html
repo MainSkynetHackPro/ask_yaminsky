@@ -1,6 +1,15 @@
 {% extends "base.html" %}
+{% load static %}
+{% load base_tags %}
+
+{% block js %}
+    <script src="{% static "js/vote.js" %}"></script>
+{% endblock %}
 
 {% block content %}
+    <input type="hidden" class="ask-vote-url" value="{% url "ask:vote_ask" %}">
+    <input type="hidden" class="answer-vote-url" value="{% url "ask:vote_answer" %}">
+    {% csrf_token %}
     <div class="parent-block block">
         <div class="user-info">
             <div class="avatar">
@@ -12,13 +21,21 @@
             </div>
             <p class="username">{{ object.author.username }}</p>
             <div class="rating">
-                <a href="#">
-                    <span class="down vote-down glyphicon glyphicon-thumbs-down"></span>
-                </a>
-                <span class="value">{{ object.rating }}</span>
-                <a href="#">
-                    <span class="up vote-up glyphicon glyphicon-thumbs-up"></span>
-                </a>
+                {% with uservote=object|get_user_vote:request.user %}
+                    {% if uservote == 0 %}
+                        <a href="#" class="vote-down" data-ask="{{ object.pk }}">
+                            <span class="down glyphicon glyphicon-thumbs-down"></span>
+                        </a>
+                    {% endif %}
+
+                    <span class="{% if uservote == 1 %}voted-up {% elif uservote == -1 %}voted-down {% endif %}value">{{ object.rating }}</span>
+
+                    {% if uservote == 0 %}
+                        <a href="#" class="vote-up" data-ask="{{ object.pk }}">
+                            <span class="up glyphicon glyphicon-thumbs-up"></span>
+                        </a>
+                    {% endif %}
+                {% endwith %}
             </div>
         </div>
         <div class="content">
@@ -49,13 +66,25 @@
                 </div>
                 <p class="username">{{ answer.author.username }}</p>
                 <div class="rating">
-                    <a href="#">
-                        <span class="down answer-vote-down glyphicon glyphicon-thumbs-down"></span>
-                    </a>
-                    <span class="value">{{ answer.rating }}</span>
-                    <a href="#">
-                        <span class="up answer-vote-up glyphicon glyphicon-thumbs-up"></span>
-                    </a>
+                    {% if request.user.is_authenticated %}
+                        {% with uservote=answer|get_user_vote:request.user %}
+                            {% if uservote == 0 %}
+                                <a href="#" class="answer-vote-down" data-answer="{{ answer.pk }}">
+                                    <span class="down glyphicon glyphicon-thumbs-down"></span>
+                                </a>
+                            {% endif %}
+
+                            <span class="{% if uservote == 1 %}voted-up {% elif uservote == -1 %}voted-down {% endif %}value">{{ answer.rating }}</span>
+
+                            {% if uservote == 0 %}
+                                <a href="#" class="answer-vote-up" data-answer="{{ answer.pk }}">
+                                    <span class="up glyphicon glyphicon-thumbs-up"></span>
+                                </a>
+                            {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        <span class="value">{{ answer.rating }}</span>
+                    {% endif %}
                 </div>
             </div>
             <div class="content">

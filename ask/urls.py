@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from .views import AskListView, TopAskListView, QuestionView, CreateAskView, ProfileView, LoginView, RegistrationView, \
-    ByTagView, logout_view, vote_ask
+    ByTagView, logout_view, vote_ask, vote_answer
 
 urlpatterns = [
     url(
@@ -13,6 +13,12 @@ urlpatterns = [
         r'^vote/ask/$',
         vote_ask,
         name='vote_ask'
+    ),
+
+    url(
+        r'^vote/answer/$',
+        vote_answer,
+        name='vote_answer'
     ),
 
     url(

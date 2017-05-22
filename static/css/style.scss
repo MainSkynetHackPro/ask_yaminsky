@@ -111,6 +111,12 @@ $c_red: #de2a25;
             top: -2px;
             font-size: 16px;
         }
+        .voted-up{
+            color: darken($c_green, 20%);
+        }
+        .voted-down{
+            color: darken($c_red, 15%);
+        }
         span {
             margin: 0 2px
         }

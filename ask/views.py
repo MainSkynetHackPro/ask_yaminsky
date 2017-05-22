@@ -1,15 +1,16 @@
 # coding=utf8
+import json
+
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.views.decorators.http import require_http_methods
 from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView
 
 from ask.forms import RegistrationForm, ProfileForm, AskForm, AnswerForm
-from ask.models import Ask, Tag, UserVote
-from django.core.urlresolvers import reverse
-from django.views.decorators.http import require_http_methods
-from django.contrib.auth.decorators import login_required
-import json
+from ask.models import Ask, Tag, UserVote, Answer
 
 
 class AskListView(ListView):
@@ -17,6 +18,10 @@ class AskListView(ListView):
     model = Ask
     ordering = '-pk'
     paginate_by = 10
+
+    def get_queryset(self):
+        queryset = Ask.objects.all()
+        return queryset
 
 
 class TopAskListView(ListView):
@@ -54,6 +59,7 @@ class QuestionView(FormView, DetailView):
     form_class = AnswerForm
 
     def post(self, request, *args, **kwargs):
+        self.object = None
         if self.request.user.is_authenticated():
             return super(QuestionView, self).post(request, *args, **kwargs)
         else:
@@ -123,9 +129,11 @@ class LoginView(TemplateView):
 @require_http_methods(["POST"])
 def vote_ask(request):
     try:
-        ask_id = int(request.POST.get('ask_id'))
+        ask_id = int(request.POST.get('id'))
         delta = int(request.POST.get('delta'))
     except ValueError:
+        raise Http404
+    except TypeError:
         raise Http404
     data = dict()
 
@@ -139,19 +147,64 @@ def vote_ask(request):
         if not ask:
             raise Http404
 
-        vote = UserVote()
-        vote.author = request.user
-        vote.ask = ask
-        vote.delta = delta
-        vote.save()
         votes = ask.votes.all()
-        rating = 0
-        for v in votes:
-            rating += v.delta
-        ask.rating = rating
-        ask.save()
-        data['error'] = False
-        data['message'] = 'Ask successfully voted'
+        if ask.votes.filter(author=request.user).count() > 0:
+            data['error'] = True
+            data['message'] = 'Already voted'
+        else:
+            vote = UserVote(author=request.user, ask=ask, delta=delta)
+            vote.save()
+
+            rating = 0
+            for v in votes:
+                rating += v.delta
+            ask.rating = rating
+            ask.save()
+            data['error'] = False
+            data['message'] = 'Ask successfully voted'
+            data['rating'] = rating
+
+    return HttpResponse(json.dumps(data))
+
+
+@login_required
+@require_http_methods(["POST"])
+def vote_answer(request):
+    try:
+        answer_id = int(request.POST.get('id'))
+        delta = int(request.POST.get('delta'))
+    except ValueError:
+        raise Http404
+    except TypeError:
+        raise Http404
+    data = dict()
+
+    data['error'] = True
+    data['message'] = 'Something gone wrong'
+
+    if delta == 1 or delta == -1:
+
+        answer = Answer.objects.filter(pk=answer_id).first()
+
+        if not answer:
+            raise Http404
+
+        votes = answer.votes.all()
+        if answer.votes.filter(author=request.user).count() > 0:
+            data['error'] = True
+            data['message'] = 'Already voted'
+        else:
+            vote = UserVote(author=request.user, answer=answer, delta=delta)
+            vote.save()
+
+            rating = 0
+            for v in votes:
+                rating += v.delta
+            answer.rating = rating
+            answer.save()
+            data['error'] = False
+            data['message'] = 'Answer successfully voted'
+            data['rating'] = rating
 
     return HttpResponse(json.dumps(data))
 
