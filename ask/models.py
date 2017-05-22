@@ -83,6 +83,11 @@ class Ask(models.Model):
     def __unicode__(self):
         return self.question
 
+    def has_correct_answers(self):
+        if self.answers.filter(is_correct=True).count() > 0:
+            return True
+        return False
+
 
 class Answer(models.Model):
     text = models.TextField(verbose_name=u'Answers')
@@ -92,6 +97,8 @@ class Answer(models.Model):
     author = models.ForeignKey(User, verbose_name=u'Author')
 
     date_create = models.DateTimeField(verbose_name=u'Create date', default=timezone.now)
+
+    is_correct = models.BooleanField(verbose_name=u'Correct answer', default=False)
 
     class Meta:
         verbose_name = u'Answer'

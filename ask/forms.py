@@ -38,7 +38,7 @@ class RegistrationForm(ModelForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = User
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'avatar')
 
 
 class AskForm(ModelForm):

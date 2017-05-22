@@ -186,4 +186,11 @@ ul.tagit {
     -moz-box-shadow: none;
     box-shadow: none; }
 
+.correct-answer {
+  background: #e2f7e2; }
+
+.correct-answer-prefix {
+  font-weight: bold;
+  color: #57d057; }
+
 /*# sourceMappingURL=style.css.map */

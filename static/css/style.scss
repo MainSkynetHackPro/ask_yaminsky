@@ -257,3 +257,12 @@ ul.tagit {
      box-shadow: none;
   }
 }
+
+.correct-answer{
+    background: lighten($c_green, 35%);
+}
+
+.correct-answer-prefix{
+    font-weight: bold;
+    color: $c_green;
+}

@@ -3,14 +3,14 @@
 {% block content %}
     <div class="form row-form short-form">
         <div class="form-header">Registration</div>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {% include "formfields/text_field.html" with field=form.username %}
             {% include "formfields/text_field.html" with field=form.email %}
 
             <div class="row">
                 <label>Avatar</label>
-                <input type="file">
+                <input name="avatar" type="file">
             </div>
 
             {% include "formfields/password_field.html" with field=form.password %}

@@ -20,7 +20,7 @@ class AskListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = Ask.objects.all()
+        queryset = Ask.objects.all().order_by('-pk')
         return queryset
 
 
@@ -207,6 +207,43 @@ def vote_answer(request):
             data['rating'] = rating
 
     return HttpResponse(json.dumps(data))
+
+
+@login_required
+@require_http_methods(["POST"])
+def mark_answer(request):
+    try:
+        answer_id = int(request.POST.get('id'))
+        checked = bool(request.POST.get('checked'))
+    except ValueError:
+        raise Http404
+    except TypeError:
+        raise Http404
+
+    data = dict()
+
+    data['error'] = True
+    data['message'] = 'Something gone wrong'
+
+    answer = Answer.objects.filter(pk=answer_id).first()
+    if not answer:
+        raise Http404
+
+    print answer.ask.author
+    print request.user
+
+    if answer.ask.author == request.user:
+        ask = answer.ask
+        if ask.answers.filter(is_correct=True).count() > 0:
+            data['message'] = 'Correct decision exixts'
+        else:
+            answer.is_correct = checked
+            answer.save()
+            data['error'] = False
+            data['message'] = 'Successfully marked as correct answer'
+
+    return HttpResponse(json.dumps(data))
+
 
 
 def logout_view(request):

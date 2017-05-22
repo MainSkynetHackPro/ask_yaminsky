@@ -9,6 +9,7 @@
 {% block content %}
     <input type="hidden" class="ask-vote-url" value="{% url "ask:vote_ask" %}">
     <input type="hidden" class="answer-vote-url" value="{% url "ask:vote_answer" %}">
+    <input type="hidden" class="correct-answer-url" value="{% url "ask:mark_answer" %}">
     {% csrf_token %}
     <div class="parent-block block">
         <div class="user-info">
@@ -54,62 +55,68 @@
             </div>
         </div>
     </div>
-    {% for answer in object.answers.all %}
-        <div class="b-block block">
-            <div class="user-info">
-                <div class="avatar">
-                    {% if answer.author.avatar %}
-                        <img class="user-avatar-middle" src="{{ answer.author.avatar.url }}">
-                    {% else %}
-                        <img class="user-avatar-middle" src="holder.js/80x80">
-                    {% endif %}
-                </div>
-                <p class="username">{{ answer.author.username }}</p>
-                <div class="rating">
-                    {% if request.user.is_authenticated %}
-                        {% with uservote=answer|get_user_vote:request.user %}
-                            {% if uservote == 0 %}
-                                <a href="#" class="answer-vote-down" data-answer="{{ answer.pk }}">
-                                    <span class="down glyphicon glyphicon-thumbs-down"></span>
-                                </a>
-                            {% endif %}
-
-                            <span class="{% if uservote == 1 %}voted-up {% elif uservote == -1 %}voted-down {% endif %}value">{{ answer.rating }}</span>
-
-                            {% if uservote == 0 %}
-                                <a href="#" class="answer-vote-up" data-answer="{{ answer.pk }}">
-                                    <span class="up glyphicon glyphicon-thumbs-up"></span>
-                                </a>
-                            {% endif %}
-                        {% endwith %}
-                    {% else %}
-                        <span class="value">{{ answer.rating }}</span>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="content">
-                <div class="text">
-                    {{ answer.text }}
-                </div>
-                {% if request.user and request.user == object.author %}
-                    <div class="bottom-data">
-                        <input type="checkbox" id="is_correct">
-                        <label for="is_correct">Correct!</label>
+    {% with show_correct_checkbox=object.has_correct_answers %}
+        {{ object.has_correct_answers }}
+        {% for answer in object.answers.all %}
+            <div class="b-block block {% if answer.is_correct %}correct-answer{% endif %}">
+                <div class="user-info">
+                    <div class="avatar">
+                        {% if answer.author.avatar %}
+                            <img class="user-avatar-middle" src="{{ answer.author.avatar.url }}">
+                        {% else %}
+                            <img class="user-avatar-middle" src="holder.js/80x80">
+                        {% endif %}
                     </div>
-                {% endif %}
+                    <p class="username">{{ answer.author.username }}</p>
+                    <div class="rating">
+                        {% if request.user.is_authenticated %}
+                            {% with uservote=answer|get_user_vote:request.user %}
+                                {% if uservote == 0 %}
+                                    <a href="#" class="answer-vote-down" data-answer="{{ answer.pk }}">
+                                        <span class="down glyphicon glyphicon-thumbs-down"></span>
+                                    </a>
+                                {% endif %}
+
+                                <span class="{% if uservote == 1 %}voted-up {% elif uservote == -1 %}voted-down {% endif %}value">{{ answer.rating }}</span>
+
+                                {% if uservote == 0 %}
+                                    <a href="#" class="answer-vote-up" data-answer="{{ answer.pk }}">
+                                        <span class="up glyphicon glyphicon-thumbs-up"></span>
+                                    </a>
+                                {% endif %}
+                            {% endwith %}
+                        {% else %}
+                            <span class="value">{{ answer.rating }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="text">
+                        {{ answer.text }}
+                    </div>
+                    {% if request.user and request.user == object.author and not answer.is_correct %}
+                        {% if not show_correct_checkbox %}
+                            <div class="bottom-data checkbox-correct-container">
+                                <input class="is-correct-answer" data-answer="{{ answer.pk }}" type="checkbox"
+                                       id="is_correct">
+                                <label for="is_correct">Correct!</label>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
+        {% endfor %}
+        <div class="form">
+            <form method="POST">
+                {% csrf_token %}
+
+                {% include "formfields/textarea_field.html" with field=form.text %}
+
+                <div class="row">
+                    <input class="btn btn-success" type="submit" value="Reply">
+                </div>
+            </form>
         </div>
-    {% endfor %}
-    <div class="form">
-        <form method="POST">
-            {% csrf_token %}
-
-            {% include "formfields/textarea_field.html" with field=form.text %}
-
-            <div class="row">
-                <input class="btn btn-success" type="submit" value="Reply">
-            </div>
-        </form>
-    </div>
+    {% endwith %}
     {% include "blocks/pagination.html" %}
 {% endblock %}
