@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponseRedirect
 from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView
 
-from ask.forms import RegistrationForm, ProfileForm, AskForm
+from ask.forms import RegistrationForm, ProfileForm, AskForm, AnswerForm
 from ask.models import Ask, Tag
 from django.core.urlresolvers import reverse
 
@@ -45,9 +45,24 @@ class ByTagView(ListView):
         return context
 
 
-class QuestionView(DetailView):
+class QuestionView(FormView, DetailView):
     template_name = 'ask/answer.html'
     model = Ask
+    form_class = AnswerForm
+
+    def post(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return super(QuestionView, self).post(request, *args, **kwargs)
+        else:
+            raise Http404
+
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.author = self.request.user
+        instance.ask = Ask.objects.filter(pk=self.kwargs.get('pk')).first()
+        instance.save()
+        return HttpResponseRedirect(reverse("ask:show", kwargs={'pk':instance.ask.pk}))
+
 
 
 class CreateAskView(LoginRequiredMixin, FormView):

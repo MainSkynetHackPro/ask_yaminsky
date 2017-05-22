@@ -85,7 +85,7 @@ class Ask(models.Model):
 
 
 class Answer(models.Model):
-    text = models.TextField(verbose_name=u'Text')
+    text = models.TextField(verbose_name=u'Answers')
     rating = models.IntegerField(verbose_name=u'Rating', default=0)
 
     ask = models.ForeignKey(Ask, verbose_name=u'Ask', related_name='answers')

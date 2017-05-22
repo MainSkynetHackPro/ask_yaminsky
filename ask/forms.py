@@ -1,7 +1,7 @@
 # encoding=utf8
 from django.forms import ModelForm
 from django import forms
-from ask.models import User, Ask, Tag
+from ask.models import User, Ask, Tag, Answer
 import re
 
 
@@ -72,3 +72,9 @@ class AskForm(ModelForm):
                     instance.tags.add(t_item)
 
         return instance
+
+
+class AnswerForm(ModelForm):
+    class Meta:
+        model = Answer
+        fields = ('text',)

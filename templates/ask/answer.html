@@ -62,21 +62,25 @@
                 <div class="text">
                     {{ answer.text }}
                 </div>
-                <div class="bottom-data">
-                    <input type="checkbox" id="is_correct">
-                    <label for="is_correct">Correct!</label>
-                </div>
+                {% if request.user and request.user == object.author %}
+                    <div class="bottom-data">
+                        <input type="checkbox" id="is_correct">
+                        <label for="is_correct">Correct!</label>
+                    </div>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
     <div class="form">
-        <div class="row">
-            <label>Answer:</label>
-            <textarea class="form-control"></textarea>
-        </div>
-        <div class="row">
-            <input class="btn btn-success" type="submit" value="Reply">
-        </div>
+        <form method="POST">
+            {% csrf_token %}
+
+            {% include "formfields/textarea_field.html" with field=form.text %}
+
+            <div class="row">
+                <input class="btn btn-success" type="submit" value="Reply">
+            </div>
+        </form>
     </div>
     {% include "blocks/pagination.html" %}
 {% endblock %}
