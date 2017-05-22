@@ -9,7 +9,7 @@
             {% include "formfields/text_field.html" with field=form.email %}
             <div class="row">
                 <label>Avatar</label>
-                <img src="{{ MEDIA_URL }}{{ request.user.avatar }}">
+                <img style="width: 100px; height: 100%;" src="{{ request.user.avatar.url }}">
             </div>
             <div class="row">
                 <label></label>
