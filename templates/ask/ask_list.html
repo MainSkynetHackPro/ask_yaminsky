@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block content %}
+    <input type="hidden" class="ask-vote-url" value="{% url "ask:vote_ask" %}">
+    {% csrf_token %}
     <div class="page-header custom-header">
         {% block page-sub-header %}
             <h3>New questions</h3>

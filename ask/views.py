@@ -1,12 +1,15 @@
 # coding=utf8
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.views.generic import TemplateView, ListView, DetailView, FormView, UpdateView
 
 from ask.forms import RegistrationForm, ProfileForm, AskForm, AnswerForm
-from ask.models import Ask, Tag
+from ask.models import Ask, Tag, UserVote
 from django.core.urlresolvers import reverse
+from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
+import json
 
 
 class AskListView(ListView):
@@ -61,8 +64,7 @@ class QuestionView(FormView, DetailView):
         instance.author = self.request.user
         instance.ask = Ask.objects.filter(pk=self.kwargs.get('pk')).first()
         instance.save()
-        return HttpResponseRedirect(reverse("ask:show", kwargs={'pk':instance.ask.pk}))
-
+        return HttpResponseRedirect(reverse("ask:show", kwargs={'pk': instance.ask.pk}))
 
 
 class CreateAskView(LoginRequiredMixin, FormView):
@@ -77,7 +79,7 @@ class CreateAskView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         instance = form.save(commit=True)
-        return HttpResponseRedirect(reverse("ask:show", kwargs={'pk':instance.pk}))
+        return HttpResponseRedirect(reverse("ask:show", kwargs={'pk': instance.pk}))
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
@@ -115,6 +117,43 @@ class LoginView(TemplateView):
         if not redirect_to:
             redirect_to = '/'
         return HttpResponseRedirect(redirect_to)
+
+
+@login_required
+@require_http_methods(["POST"])
+def vote_ask(request):
+    try:
+        ask_id = int(request.POST.get('ask_id'))
+        delta = int(request.POST.get('delta'))
+    except ValueError:
+        raise Http404
+    data = dict()
+
+    data['error'] = True
+    data['message'] = 'Something gone wrong'
+
+    if delta == 1 or delta == -1:
+
+        ask = Ask.objects.filter(pk=ask_id).first()
+
+        if not ask:
+            raise Http404
+
+        vote = UserVote()
+        vote.author = request.user
+        vote.ask = ask
+        vote.delta = delta
+        vote.save()
+        votes = ask.votes.all()
+        rating = 0
+        for v in votes:
+            rating += v.delta
+        ask.rating = rating
+        ask.save()
+        data['error'] = False
+        data['message'] = 'Ask successfully voted'
+
+    return HttpResponse(json.dumps(data))
 
 
 def logout_view(request):
