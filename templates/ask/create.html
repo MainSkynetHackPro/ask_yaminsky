@@ -1,22 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block precss %}
-<link rel="stylesheet" href="{% static "lib/css/tagit/jquery.tagit.css" %}">
-        <link rel="stylesheet" href="{% static "lib/css/tagit/tagit.ui-zendesk.css" %}">
-{% endblock %}
-
-{% block css %}
-
-    {#    <link rel="stylesheet" href="{% static "lib/css/tagit/tagit.ui-zendesk.css" %}">#}
-{% endblock %}
-
-{% block js %}
-    <script src="{% static "lib/js/jquery-ui.min.js" %}"></script>
-    <script src="{% static "lib/js/tagit/tag-it.min.js" %}"></script>
-    <script src="{% static "js/ask_create.js" %}"></script>
-{% endblock %}
-
 {% block content %}
     <form action="#" method="POST">
         {% csrf_token %}

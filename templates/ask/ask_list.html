@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block js %}
+    <script src="{% static "js/vote.js" %}"></script>
+{% endblock %}
 
 {% block content %}
     <div class="page-header custom-header">
@@ -19,11 +24,11 @@
                 </div>
                 <p class="username">{{ item.author.username }}</p>
                 <div class="rating">
-                    <a href="#">
+                    <a href="#" class="vote-down" data-ask="{{ item.pk }}">
                         <span class="down glyphicon glyphicon-thumbs-down"></span>
                     </a>
                     <span class="value">{{ item.rating }}</span>
-                    <a href="#">
+                    <a href="#" class="vote-up" data-ask="{{ item.pk }}">
                         <span class="up glyphicon glyphicon-thumbs-up"></span>
                     </a>
                 </div>
