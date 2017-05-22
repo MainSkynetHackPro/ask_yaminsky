@@ -21,7 +21,7 @@ def avatar_dir_path(instance, filename):
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(verbose_name=u'Username', max_length=255, unique=True, default=None,
                                 error_messages={'unique': 'User with this username exists'})
-    email = models.EmailField(verbose_name=u'Email', unique=True, default=None, null=True, blank=True)
+    email = models.EmailField(verbose_name=u'Email', unique=True, default=None)
 
     is_staff = models.BooleanField(verbose_name=u'has admin access', default=False)
 
