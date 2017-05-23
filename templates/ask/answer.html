@@ -17,7 +17,7 @@
                 {% if object.author.avatar %}
                     <img class="user-avatar-middle" src="{{ object.author.avatar.url }}">
                 {% else %}
-                    <img class="user-avatar-middle" src="holder.js/80x80">
+                    <img class="user-avatar-middle" src="{% static "images/avatar.png" %}">
                 {% endif %}
             </div>
             <p class="username">{{ object.author.username }}</p>
@@ -64,7 +64,7 @@
                         {% if answer.author.avatar %}
                             <img class="user-avatar-middle" src="{{ answer.author.avatar.url }}">
                         {% else %}
-                            <img class="user-avatar-middle" src="holder.js/80x80">
+                            <img class="user-avatar-middle" src="{% static "images/avatar.png" %}">
                         {% endif %}
                     </div>
                     <p class="username">{{ answer.author.username }}</p>

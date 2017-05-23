@@ -24,5 +24,15 @@ function lazy_success(text) {
 
 $(document).ready(function () {
 
+    $(function () {
+        $("#search-box").autocomplete({
+            source: '/autocomplete/asks',
+            minLength: 2,
+            select: function (e, ui) {
+                $('#search-box').val(ui.item.label);
+                $('#search-box').closest('form').submit();
+            }
+        });
+    });
 
 });

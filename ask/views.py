@@ -11,6 +11,7 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView, U
 
 from ask.forms import RegistrationForm, ProfileForm, AskForm, AnswerForm
 from ask.models import Ask, Tag, UserVote, Answer
+from django.db.models import Q
 
 
 class AskListView(ListView):
@@ -21,7 +22,16 @@ class AskListView(ListView):
 
     def get_queryset(self):
         queryset = Ask.objects.all().order_by('-pk')
+        if self.request.GET.get('search'):
+            text = self.request.GET.get('search')
+            queryset = queryset.filter(Q(question__icontains=text) | Q(text__icontains=text))
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(AskListView, self).get_context_data(**kwargs)
+        if self.request.GET.get('search'):
+            context['search_string'] = self.request.GET.get('search')
+        return context
 
 
 class TopAskListView(ListView):
@@ -42,7 +52,7 @@ class ByTagView(ListView):
 
     def get_queryset(self):
         pk = self.kwargs.get('pk')
-        queryset = Ask.objects.get_all_by_tag_pk(pk)
+        queryset = Ask.objects.get_all_by_tag_pk(pk).order_by('-pk')
         if not queryset:
             raise Http404
         return queryset
@@ -123,6 +133,19 @@ class LoginView(TemplateView):
         if not redirect_to:
             redirect_to = '/'
         return HttpResponseRedirect(redirect_to)
+
+
+def asks_autocomplete(request):
+    data = []
+    text = request.GET.get('term')
+    if not text:
+        raise Http404
+    asks = Ask.objects.filter(Q(question__icontains=text) | Q(text__icontains=text)).values('question').distinct()[:10]
+    for ask in asks:
+        item = dict()
+        item['label'] = ask['question']
+        data.append(item)
+    return HttpResponse(json.dumps(data))
 
 
 @login_required
@@ -243,7 +266,6 @@ def mark_answer(request):
             data['message'] = 'Successfully marked as correct answer'
 
     return HttpResponse(json.dumps(data))
-
 
 
 def logout_view(request):

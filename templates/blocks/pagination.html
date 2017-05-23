@@ -2,18 +2,18 @@
     <ul class="pagination">
         {% if page_obj.has_previous %}
             <li>
-                <a href="{{ page_base_url }}{{ page_obj.previous_page_number }}" aria-label="Previous">
+                <a href="{{ page_base_url }}{{ page_obj.previous_page_number }}{% if search_string %}/?search={{ search_string }}{% endif %}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
         {% endif %}
         {% for page in page_obj.paginator.page_range %}
             <li class="{% if page == page_obj.number %}active{% endif %}"><a
-                    href="{{ page_base_url }}{{ page }}">{{ page }}</a></li>
+                    href="{{ page_base_url }}{{ page }}{% if search_string %}/?search={{ search_string }}{% endif %}">{{ page }}</a></li>
         {% endfor %}
         {% if page_obj.has_next %}
             <li>
-                <a href="{{ page_base_url }}{{ page_obj.next_page_number }}" aria-label="Next">
+                <a href="{{ page_base_url }}{{ page_obj.next_page_number }}{% if search_string %}/?search={{ search_string }}{% endif %}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

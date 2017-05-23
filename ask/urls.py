@@ -1,8 +1,15 @@
 from django.conf.urls import url
 from .views import AskListView, TopAskListView, QuestionView, CreateAskView, ProfileView, LoginView, RegistrationView, \
-    ByTagView, logout_view, vote_ask, vote_answer, mark_answer
+    ByTagView, logout_view, vote_ask, vote_answer, mark_answer, asks_autocomplete
 
 urlpatterns = [
+
+    url(
+        r'^autocomplete/asks/$',
+        asks_autocomplete,
+        name='autocomplete_asks'
+    ),
+
     url(
         r'^$',
         AskListView.as_view(),

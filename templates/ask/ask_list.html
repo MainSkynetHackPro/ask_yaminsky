@@ -22,7 +22,7 @@
                     {% if item.author.avatar %}
                         <img class="user-avatar-middle" src="{{ item.author.avatar.url }}">
                     {% else %}
-                        <img class="user-avatar-middle" src="holder.js/80x80">
+                        <img class="user-avatar-middle" src="{% static "images/avatar.png" %}">
                     {% endif %}
                 </div>
                 <p class="username">{{ item.author.username }}</p>

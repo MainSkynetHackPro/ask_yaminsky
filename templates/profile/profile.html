@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
     <div class="form row-form short-form">
@@ -9,7 +10,7 @@
             {% include "formfields/text_field.html" with field=form.email %}
             <div class="row">
                 <label>Avatar</label>
-                <img style="width: 100px; height: 100%;" src="{{ request.user.avatar.url }}">
+                <img style="width: 100px; height: 100%;" src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static "images/avatar.png" %}{% endif %}">
             </div>
             <div class="row">
                 <label></label>
