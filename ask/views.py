@@ -1,4 +1,4 @@
-# coding=utf8
+# encoding=utf8
 import json
 
 from django.contrib.auth import authenticate, login, logout

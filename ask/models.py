@@ -68,7 +68,7 @@ class Ask(models.Model):
     text = models.TextField(verbose_name=u'text', )
     rating = models.IntegerField(verbose_name=u'Rating', default=0)
 
-    author = models.ForeignKey(User, verbose_name=u'Author')
+    author = models.ForeignKey(User, verbose_name=u'Author', related_name=u'asks')
 
     tags = models.ManyToManyField(Tag, verbose_name=u'Tags', related_name=u'asks', blank=True)
 
@@ -94,7 +94,7 @@ class Answer(models.Model):
     rating = models.IntegerField(verbose_name=u'Rating', default=0)
 
     ask = models.ForeignKey(Ask, verbose_name=u'Ask', related_name='answers')
-    author = models.ForeignKey(User, verbose_name=u'Author')
+    author = models.ForeignKey(User, verbose_name=u'Author', related_name=u'answers')
 
     date_create = models.DateTimeField(verbose_name=u'Create date', default=timezone.now)
 

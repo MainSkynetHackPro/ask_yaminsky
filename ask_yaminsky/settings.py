@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 from ConfigParser import RawConfigParser
+import djcelery
 
 config = RawConfigParser()
 config.read('conf/app.conf')
@@ -43,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ask'
+    'djcelery',
+    'ask',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -94,6 +96,24 @@ DATABASES = {
         'PORT': config.get('db', 'port'),
         'USER': config.get('db', 'user'),
         'PASSWORD': config.get('db', 'password'),
+    }
+}
+
+### celery
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+BROKER_URL = config.get('celery', 'broker_url')
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERYD_TASK_TIME_LIMIT = 600
+CELERY_ACCEPT_CONTENT = ['pickle']
+
+### cache
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": config.get('cache', 'redis'),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }
 

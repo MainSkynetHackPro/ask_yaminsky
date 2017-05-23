@@ -3,8 +3,8 @@
         <h4>Best Members</h4>
     </div>
     <div class="content">
-        <a href="#" class="member">Member</a>
-        <a href="#" class="member">User</a>
-        <a href="#" class="member">Nick</a>
+        {% for user in users %}
+            <span class="member">{{ user.username }}</span>
+        {% endfor %}
     </div>
 </div>
