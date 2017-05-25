@@ -24,6 +24,14 @@ function lazy_success(text) {
 
 $(document).ready(function () {
 
+    // var ws_path = "ws://localhost:8000/users/";
+    // var webSocketBridge = new channels.WebSocketBridge();
+    // webSocketBridge.connect(ws_path);
+    // webSocketBridge.listen(function (data) {
+    //     alert("Wow! New question");
+    // });
+
+
     $(function () {
         $("#search-box").autocomplete({
             source: '/autocomplete/asks',

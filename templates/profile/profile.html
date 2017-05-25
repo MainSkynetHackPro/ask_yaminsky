@@ -10,12 +10,16 @@
             {% include "formfields/text_field.html" with field=form.email %}
             <div class="row">
                 <label>Avatar</label>
-                <img style="width: 100px; height: 100%;" src="{% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static "images/avatar.png" %}{% endif %}">
+                <img style="width: 100px; height: 100%;" src="
+                        {% if request.user.avatar %}{{ request.user.avatar.url }}{% else %}{% static "images/avatar.png" %}{% endif %}">
             </div>
             <div class="row">
                 <label></label>
                 <input name="avatar" type="file">
             </div>
+            {% if form.avatar.errors %}
+                <div class="error-row">{% for error in form.avatar.errors %}{{ error }}<br>{% endfor %}</div>
+            {% endif %}
             <div class="row">
                 <input class="btn btn-success" type="submit" value="Save">
             </div>

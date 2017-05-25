@@ -1,0 +1,23 @@
+{% load base_blocks %}
+{% load static %}
+<div class="b-block block {% if answer.is_correct %}correct-answer{% endif %}">
+    <div class="user-info">
+        <div class="avatar">
+            {% if answer.author.avatar %}
+                <img class="user-avatar-middle" src="{{ answer.author.avatar.url }}">
+            {% else %}
+                <img class="user-avatar-middle" src="{% static "images/avatar.png" %}">
+            {% endif %}
+        </div>
+        <p class="username">{{ answer.author.username }}</p>
+        <div class="rating">
+
+            <span class="value">{{ answer.rating }}</span>
+        </div>
+    </div>
+    <div class="content">
+        <div class="text">
+            {{ answer.text }}
+        </div>
+    </div>
+</div>

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djcelery',
     'ask',
+    'channels'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -96,6 +97,16 @@ DATABASES = {
         'PORT': config.get('db', 'port'),
         'USER': config.get('db', 'user'),
         'PASSWORD': config.get('db', 'password'),
+    }
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        'ROUTING': 'ask_yaminsky.routing.channel_routing',
     }
 }
 

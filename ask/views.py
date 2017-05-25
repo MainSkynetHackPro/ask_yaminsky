@@ -18,7 +18,7 @@ class AskListView(ListView):
     # template_name = 'ask/list.html'
     model = Ask
     ordering = '-pk'
-    paginate_by = 10
+    paginate_by = 20
 
     def get_queryset(self):
         queryset = Ask.objects.all().order_by('-pk')
@@ -38,7 +38,7 @@ class TopAskListView(ListView):
     template_name = 'ask/top_list.html'
     model = Ask
     ordering = '-rating'
-    paginate_by = 10
+    paginate_by = 20
 
     def get_queryset(self):
         queryset = Ask.objects.top_questions()
@@ -48,7 +48,7 @@ class TopAskListView(ListView):
 class ByTagView(ListView):
     template_name = 'ask/by_tag_list.html'
     model = Ask
-    paginate_by = 10
+    paginate_by = 20
 
     def get_queryset(self):
         pk = self.kwargs.get('pk')
@@ -78,8 +78,21 @@ class QuestionView(FormView, DetailView):
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.author = self.request.user
-        instance.ask = Ask.objects.filter(pk=self.kwargs.get('pk')).first()
+        ask = Ask.objects.filter(pk=self.kwargs.get('pk')).first()
+        instance.ask = ask
         instance.save()
+        from channels import Group
+        from django.template import loader
+        t = loader.get_template('ask/answer_item.html')
+        context = { "answer":instance}
+        html = t.render(context=context)
+        print '--ws send to {0}'.format('answers_{0}'.format(ask.pk))
+        Group('answers_{0}'.format(ask.pk)).send({
+            'text': json.dumps({
+                'title': ask.pk,
+                'html': html
+            })
+        })
         return HttpResponseRedirect(reverse("ask:show", kwargs={'pk': instance.ask.pk}))
 
 

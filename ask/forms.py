@@ -66,10 +66,9 @@ class AskForm(ModelForm):
             if tags:
                 tags_list = tags.split(" ")
                 for tag in tags_list:
-                    print tag
-                    t_item, created = Tag.objects.get_or_create(title=tag)
-                    print t_item
-                    instance.tags.add(t_item)
+                    if tag:
+                        t_item, created = Tag.objects.get_or_create(title=tag)
+                        instance.tags.add(t_item)
 
         return instance
 

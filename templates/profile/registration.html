@@ -12,6 +12,9 @@
                 <label>Avatar</label>
                 <input name="avatar" type="file">
             </div>
+            {% if form.avatar.errors %}
+                <div class="error-row">{% for error in form.avatar.errors %}{{ error }}<br>{% endfor %}</div>
+            {% endif %}
 
             {% include "formfields/password_field.html" with field=form.password %}
             {% include "formfields/password_field.html" with field=form.repeat_password %}
